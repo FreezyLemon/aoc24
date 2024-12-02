@@ -12,8 +12,8 @@
 using std::ifstream;
 using std::stringstream;
 
-int main(int _argc, char *_argv[]) {
-    ifstream infile("day01.txt");
+int main(int argc, char *argv[]) {
+    ifstream infile = open_input(argc, argv);
 
     std::string line;
     std::vector<int> left, right;
