@@ -6,7 +6,6 @@
 #include <numeric>
 #include <string>
 #include <vector>
-#include <ranges>
 
 using std::ifstream;
 using std::stringstream;
@@ -16,7 +15,6 @@ void die(const std::string& msg)
     std::cerr << msg << std::endl;
     exit(1);
 }
-
 
 int main(int _argc, char *_argv[]) {
     ifstream infile("day1.txt");
@@ -45,10 +43,9 @@ int main(int _argc, char *_argv[]) {
     std::sort(left.begin(), left.end());
     std::sort(right.begin(), right.end());
 
-    const auto zipped = std::ranges::zip_view(left, right);
-    const auto diff_fn = [](const auto vals) { return std::abs(std::get<0>(vals) - std::get<1>(vals)); };
+    const auto diff_fn = [](const int l, const int r) { return std::abs(l - r); };
     const auto sum_fn = [](const int acc, const int diff) { return acc + diff; };
-    const int sum = std::transform_reduce(zipped.begin(), zipped.end(), 0, sum_fn, diff_fn);
+    const int sum = std::transform_reduce(left.begin(), left.end(), right.begin(), 0, sum_fn, diff_fn);
 
     std::cout << sum << std::endl;
 
