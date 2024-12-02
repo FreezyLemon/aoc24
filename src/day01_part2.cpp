@@ -6,11 +6,23 @@
 #include <numeric>
 #include <string>
 #include <vector>
+#include <ranges>
 
 #include "util.h"
 
+using std::operator""sv;
 using std::ifstream;
 using std::stringstream;
+
+int parse(std::ranges::subrange<const char*> piece) {
+    int i;
+    const auto result = std::from_chars(piece.data(), piece.data() + piece.size(), i);
+    if (result.ec == std::errc::invalid_argument) {
+        die("parsing failure");
+    }
+
+    return i;
+}
 
 int main(int argc, char *argv[]) {
     ifstream infile = open_input(argc, argv);
@@ -18,20 +30,18 @@ int main(int argc, char *argv[]) {
     std::string line;
     std::vector<int> left, right;
     while (std::getline(infile, line)) {
-        const size_t first_space_idx = line.find(' ');
-        if (first_space_idx == std::string::npos) {
-            die("no space in line");
+        const auto numbers =
+            std::string_view(line) |
+            std::views::split("   "sv) |
+            std::views::transform(parse) |
+            std::ranges::to<std::vector<int>>();
+
+        if (numbers.size() != 2) {
+            die("not exactly 2 numbers per line");
         }
 
-        const auto left_str = line.substr(0, first_space_idx);
-        // always 3 spaces
-        const auto right_str = line.substr(first_space_idx + 3);
-
-        const int left_int = std::stoi(left_str);
-        const int right_int = std::stoi(right_str);
-
-        left.push_back(left_int);
-        right.push_back(right_int);
+        left.push_back(numbers[0]);
+        right.push_back(numbers[1]);
     }
 
     // almost definitely optimizable, idc for now
