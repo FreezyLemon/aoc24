@@ -7,14 +7,10 @@
 #include <string>
 #include <vector>
 
+#include "util.h"
+
 using std::ifstream;
 using std::stringstream;
-
-void die(const std::string& msg)
-{
-    std::cerr << msg << std::endl;
-    exit(1);
-}
 
 int main(int _argc, char *_argv[]) {
     ifstream infile("day01.txt");

@@ -1,5 +1,3 @@
-// Needs C++23 for zip_view
-
 #include <algorithm>
 #include <fstream>
 #include <iostream>
@@ -7,14 +5,10 @@
 #include <string>
 #include <vector>
 
+#include "util.h"
+
 using std::ifstream;
 using std::stringstream;
-
-void die(const std::string& msg)
-{
-    std::cerr << msg << std::endl;
-    exit(1);
-}
 
 int main(int _argc, char *_argv[]) {
     ifstream infile("day01.txt");
@@ -36,8 +30,6 @@ int main(int _argc, char *_argv[]) {
 
         left.push_back(left_int);
         right.push_back(right_int);
-
-        // std::cout << left_int << "|" << right_int << std::endl;
     }
 
     std::sort(left.begin(), left.end());
