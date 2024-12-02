@@ -44,8 +44,7 @@ int main(int _argc, char *_argv[]) {
     std::sort(right.begin(), right.end());
 
     const auto diff_fn = [](const int l, const int r) { return std::abs(l - r); };
-    const auto sum_fn = [](const int acc, const int diff) { return acc + diff; };
-    const int sum = std::transform_reduce(left.begin(), left.end(), right.begin(), 0, sum_fn, diff_fn);
+    const int sum = std::transform_reduce(left.begin(), left.end(), right.begin(), 0, std::plus(), diff_fn);
 
     std::cout << sum << std::endl;
 
