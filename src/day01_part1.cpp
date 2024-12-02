@@ -17,7 +17,7 @@ void die(const std::string& msg)
 }
 
 int main(int _argc, char *_argv[]) {
-    ifstream infile("day1.txt");
+    ifstream infile("day01.txt");
 
     std::string line;
     std::vector<int> left, right;
